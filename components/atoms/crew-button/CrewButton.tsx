@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Button } from "@mui/material";
 import "./CrewButton.scss";
 
 interface CrewButtonProps {
   displayName?: string;
   onButtonClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
-const CrewButton = ({ displayName, onButtonClick, className }: CrewButtonProps) => {
+const CrewButton = ({
+  displayName,
+  onButtonClick,
+  className,
+  disabled,
+}: CrewButtonProps) => {
   return (
-    <button className={className} onClick={onButtonClick}>
+    <Button
+      className={className}
+      disabled={disabled}
+      variant="contained"
+      onClick={onButtonClick}
+    >
       {displayName}
-    </button>
+    </Button>
   );
 };
 

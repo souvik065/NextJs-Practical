@@ -1,10 +1,10 @@
 import React from "react";
-import SearchBox from "../components/molecules/search-box/SearchBox";
+import { CrewOrganism } from "@/components/organisms/CrewOrganism/CrewOrganism";
 
 const Home: React.FC = () => {
   return (
     <div>
-      <SearchBox />
+      <CrewOrganism />
     </div>
   );
 };

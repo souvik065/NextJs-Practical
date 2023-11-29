@@ -3,12 +3,21 @@ import React from "react";
 import { CrewButton, CrewTextField } from "../../atoms";
 import { useState } from "react";
 import { ClassNames } from "@emotion/react";
+import { Stack } from "@mui/material";
 
 interface CrewSearchBoxProps {
   className?: string;
+  disabled?: boolean;
+  onSearchTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchButtonClick: () => void;
 }
 
-const SearchBox = ({ className }: CrewSearchBoxProps) => {
+const SearchBox = ({
+  className,
+  onSearchTextChange,
+  onSearchButtonClick,
+  disabled,
+}: CrewSearchBoxProps) => {
   const [textValue, setTextValue] = useState("");
 
   const handleTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,21 +30,22 @@ const SearchBox = ({ className }: CrewSearchBoxProps) => {
   };
 
   return (
-    <div className={`align-content: center ${className}`}>
-      <div className="search-box">
+    <>
+      <Stack spacing={2} direction="row">
         <CrewTextField
-          value={textValue}
-          onChange={handleTextField}
+          onChange={onSearchTextChange}
           className="crew-textfield bg-change"
           placeholder="Search"
+          disabled={disabled}
+          //InputProps={{ style: { color: "black" } }}
         />
         <CrewButton
-          onButtonClick={handleButton}
+          onButtonClick={onSearchButtonClick}
           className="crew-button"
           displayName="Search"
         />
-      </div>
-    </div>
+      </Stack>
+    </>
   );
 };
 export default SearchBox;
