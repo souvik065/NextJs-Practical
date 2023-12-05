@@ -10,6 +10,7 @@ interface CrewTextFieldProps {
   disabled?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  variant: "outlined" | "filled" | "standard" | undefined;
 }
 const CrewTextField = ({
   value,
@@ -17,19 +18,17 @@ const CrewTextField = ({
   onChange,
   className,
   disabled,
+  variant="outlined",
 }: CrewTextFieldProps) => {
   return (
-    <>
-      <TextField
+    <TextField
         label={placeholder}
-        variant="outlined"
+        variant={variant}
         className={className}
         onChange={onChange}
         value={value}
         disabled={disabled}
       />
-      <div></div>
-    </>
   );
 };
 export default CrewTextField;

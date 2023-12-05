@@ -7,7 +7,10 @@ import { Stack } from "@mui/material";
 
 interface CrewSearchBoxProps {
   className?: string;
-  disabled?: boolean;
+  disabledText?: boolean;
+  disabledButton?: boolean;
+  textFieldPlaceholder?: string;
+  buttonDisplayName?: string;
   onSearchTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchButtonClick: () => void;
 }
@@ -16,36 +19,42 @@ const SearchBox = ({
   className,
   onSearchTextChange,
   onSearchButtonClick,
-  disabled,
+  textFieldPlaceholder="Search",
+  buttonDisplayName="Search",
+  disabledText=false,
+  disabledButton=true,
 }: CrewSearchBoxProps) => {
   const [textValue, setTextValue] = useState("");
 
-  const handleTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+  const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
+    onSearchTextChange(event);
   };
 
-  const handleButton = () => {
-    console.log("Text Value : " + textValue);
+  const handleButtonClick = () => {
+    onSearchButtonClick();
+    setTextValue("");
   };
 
   return (
-    <>
-      <Stack spacing={2} direction="row">
+    <Stack spacing={2} direction="row" className={className}>
         <CrewTextField
-          onChange={onSearchTextChange}
+          onChange={handleTextFieldChange}
           className="crew-textfield bg-change"
-          placeholder="Search"
-          disabled={disabled}
-          //InputProps={{ style: { color: "black" } }}
+          placeholder={textFieldPlaceholder}
+          disabled={disabledText}
+          value={textValue}
+          variant="outlined"
         />
         <CrewButton
-          onButtonClick={onSearchButtonClick}
+          onButtonClick={handleButtonClick}
           className="crew-button"
-          displayName="Search"
+          displayName={buttonDisplayName}
+          disabled={disabledButton}
+          variant="contained"
         />
       </Stack>
-    </>
   );
 };
+
 export default SearchBox;

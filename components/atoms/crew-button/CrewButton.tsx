@@ -7,6 +7,7 @@ interface CrewButtonProps {
   onButtonClick?: () => void;
   className?: string;
   disabled?: boolean;
+  variant: "text" | "outlined" | "contained" | undefined;
 }
 
 const CrewButton = ({
@@ -14,12 +15,13 @@ const CrewButton = ({
   onButtonClick,
   className,
   disabled,
+  variant="contained",
 }: CrewButtonProps) => {
   return (
     <Button
       className={className}
       disabled={disabled}
-      variant="contained"
+      variant={variant}
       onClick={onButtonClick}
     >
       {displayName}
