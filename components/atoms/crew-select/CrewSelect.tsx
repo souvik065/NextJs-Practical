@@ -4,11 +4,11 @@ import { useState } from "react";
 
 interface CrewSelectProps {
   options?: string[];
-  onButtonClick?: () => void;
   className?: string;
+  label?: string;
 }
 
-export const CrewSelect = ({ options }: CrewSelectProps) => {
+const CrewSelect = ({ options=[], label="Select Option" }: CrewSelectProps) => {
   const [item, setItem] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setItem(event.target.value as string);
@@ -17,7 +17,7 @@ export const CrewSelect = ({ options }: CrewSelectProps) => {
   return (
     <Box width="250px">
       <TextField
-        label="Select Option"
+        label={label}
         select
         value={item}
         onChange={handleChange}
@@ -32,3 +32,6 @@ export const CrewSelect = ({ options }: CrewSelectProps) => {
     </Box>
   );
 };
+
+
+export default CrewSelect;

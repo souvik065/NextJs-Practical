@@ -1,35 +1,37 @@
 "use client";
-import { CrewSelect } from "@/components/atoms/crew-select/CrewSelect";
+import { CrewSelect } from "@/components/atoms";
 import { SearchBox } from "@/components/molecules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, Box } from "@mui/material";
 
-export const CrewOrganism = () => {
-  const [option, setOption] = useState<string>("");
+const CrewOrganism = () => {
+  const [textFieldValue, setTextFieldValue] = useState<string>("");
   const [newOptions, setNewOptions] = useState<string[]>([]);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabledTextBox, setIsDisabledTextBox] = useState(false);
+  const [isDisabledButton, setIsDisabledButton] = useState(true);
 
   const handleTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newOption = event.target.value;
-    setOption(newOption);
+    event.preventDefault();
+    const textValue = event.target.value;
+    if(textValue !=="") {
+      setTextFieldValue(textValue);
+      setIsDisabledButton(false);
+    }
   };
 
   const handleSearchButtonClick = () => {
     if (newOptions.length > 4) {
-      setIsDisabled(true);
+      setIsDisabledTextBox(true);
+      setIsDisabledButton(true);
     } else {
       const newOption = [...newOptions];
-      newOption[0] = option;
-      setNewOptions([...newOptions, option]);
-      console.log("newOptions : ", newOptions);
+      if(textFieldValue !== "") {
+        newOption[0] = textFieldValue;
+        setNewOptions([...newOptions, textFieldValue]);
+      }
+      
+      setTextFieldValue("");
     }
-  };
-
-  const SearchBoxhandleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    //setOption(typeof value === "string" ? value.split(", ") : value);
   };
 
   return (
@@ -38,10 +40,15 @@ export const CrewOrganism = () => {
         <SearchBox
           onSearchButtonClick={handleSearchButtonClick}
           onSearchTextChange={handleTextField}
-          disabled={isDisabled}
+          disabledText={isDisabledTextBox}
+          disabledButton={isDisabledButton}
+          buttonDisplayName="Add to List"
+          textFieldPlaceholder="Enter Text"
         />
-        <CrewSelect options={newOptions} />
+        <CrewSelect options={newOptions} label="Select"  />
       </Stack>
     </Box>
   );
 };
+
+export default CrewOrganism;
